@@ -147,6 +147,10 @@ public class WebElementConditions implements FluentConditions {
 
     @Override
     public RectangleConditions hasRectangle() {
-        return new RectangleConditionsImpl(element.getElement().getRect());
+        RectangleConditionsImpl conditions = new RectangleConditionsImpl(element.getElement().getRect());
+        if (negation) {
+            conditions = conditions.not();
+        }
+        return conditions;
     }
 }
