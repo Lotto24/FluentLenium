@@ -70,6 +70,10 @@ public class FluentTestRunnerAdapter extends FluentAdapter {
         } else if (strategy == SharedDriverStrategy.PER_CLASS) {
             synchronized (this) {
                 if (!isSharedDriverPerClass) {
+                    if (sharedDriver != null) {
+                        doReleaseSharedDriver();
+                    }
+
                     initFluent(getDefaultDriver()).withDefaultUrl(getDefaultBaseUrl());
                     sharedDriver = getDriver();
                     isSharedDriverPerClass = true;
@@ -78,6 +82,10 @@ public class FluentTestRunnerAdapter extends FluentAdapter {
                 }
             }
         } else {
+            if (sharedDriver != null) {
+                doReleaseSharedDriver();
+            }
+
             initFluent(getDefaultDriver()).withDefaultUrl(getDefaultBaseUrl());
         }
 
